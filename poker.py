@@ -1,8 +1,7 @@
-# scuffed poker simulation util toolkit
-# charlie tharas 2022
+# this class handles most functions relevant to dealing with a deck of cards, utility functions for game
 
 from itertools import combinations
-from random import shuffle
+from random import shuffle, randint
 
 # master lists used to determine rankings of rankings
 master_ranks = [
@@ -158,3 +157,9 @@ def hand_str(hand):
   for i in hand:
     s += i.rank_literal + " " + i.suit + ", "
   return s
+
+def perform_decision(do_call, do_raise, do_fold): 
+  if do_call == do_raise and do_raise == do_fold and do_call == 0:
+    return randint(0, 2)
+  x = (do_call, do_raise, do_fold)
+  return x.index(max(x))

@@ -1,5 +1,4 @@
-# scuffed poker game simulator w/ slightly tweaked ruleset
-# charlie tharas 2022
+# this class handles most functions relevant to actual game simulation
 
 import poker
 from random import shuffle
@@ -48,10 +47,14 @@ class Player:
       self.cancel_decision()
       return x
     else:
-      if r:
-        self.update_money(r*-5)
+      self.update_money(-5)
       if x == 1:
-        self.update_money(-5)
+        self.update_money((r+1)*-5)
+        return x
+      if x == 0:
+       return x
+      print("ERR", x)
+      return x
 
   def reset_cards(self):
     self.cards = []
@@ -96,7 +99,15 @@ def real_round(players):
   pool = 5 * len(players)
 
   players, pool = make_decisions(players, pool)
-
+  
+  if check_in(players) == 0:
+    return players
+  elif check_in(players) == 1:
+    for i in range(len(players)):
+      if players[i].is_playing():
+        players[i].update_money(pool)
+    return players
+  
   flop = (deck.pop(0), deck.pop(0), deck.pop(0))
   for i in flop:
     for j in range(len(players)):
@@ -104,25 +115,34 @@ def real_round(players):
 
   players, pool = make_decisions(players, pool)
 
+  if check_in(players) == 0:
+    return players
+  elif check_in(players) == 1:
+    for i in range(len(players)):
+      if players[i].is_playing():
+        players[i].update_money(pool)
+    return players
+
   turn = deck.pop(0)
   for j in range(len(players)):
     players[j].add_card(turn)
 
   players, pool = make_decisions(players, pool)
 
+  if check_in(players) == 0:
+    return players
+  elif check_in(players) == 1:
+    for i in range(len(players)):
+      if players[i].is_playing():
+        players[i].update_money(pool)
+    return players
+
   river = deck.pop(0)
   for j in range(len(players)):
     players[j].add_card(river)
+  
   standings = {}
   max_standing = -2
-
-  all_out = True
-  for i in players:
-    if i.is_playing():
-      all_out = False
-
-  if all_out:
-    return players
 
   for i in players:
     if i.is_playing() == False:
@@ -134,17 +154,18 @@ def real_round(players):
       if x >= max_standing:
         winner_id = i.get_ID()
         max_standing = x
-
+  
   if list(standings.values()).count(max_standing) > 1:
     highest_card_winners = []
     highest_card = -2
     for i in players:
-      if standings[i.get_ID()] != max_standing:
+      if standings[i.get_ID()] < max_standing:
         continue
-      c = max([x.rank for x in i.get_cards()])
-      if c >= highest_card:
-        highest_card = c
-        highest_card_winners.append(i.get_ID)
+      else:
+        c = max([x.rank for x in i.get_cards()])
+        if c >= highest_card:
+          highest_card = c
+          highest_card_winners.append(i.get_ID())
     for i in range(len(players)):
       if players[i].get_ID() in highest_card_winners:
         players[i].update_money(round(pool / len(highest_card_winners)))
@@ -157,14 +178,12 @@ def real_round(players):
 # updates prize pool and players with decisions
 def make_decisions(players, pool):
   r = 0
-  decisions = []
   for i in range(len(players)):
     a = players[i].decide(r)
     if a == 1:
       r += 1
-  for c, i in decisions:
-    if i == 1:
-      pool += (len(players)-c)*5
+    if a < 2:
+      pool += r*5
   return players, pool
 
 # runs a number of rounds until one player remains, no wins counted for draws, alters a dictionary of winners with total win data
@@ -182,3 +201,9 @@ def game(winners):
     players = list(filter(None, players))
   if len(players) > 0:
     winners[players[0].get_ID()] += 1
+
+def check_in(players):
+  x = 0
+  for i in players:
+    x += 1 if i.is_playing() else 0
+  return x

@@ -9,4 +9,6 @@ for i in range(n):
     print("Played", i, "games")
   game.game(winners)
 
+print("Win counts for", n, "games:")
 print(winners)
+print("Draws:", n-sum(winners.values()))
