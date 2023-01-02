@@ -1,36 +1,9 @@
 import game
 import itertools
-import jesseyang, judeyang, malachibaxter, nathanwertheimer, teddyabularach, joshuarandall, ericaburton, corvuschanoine, madelinelee, sanvisristava, oliverkim, jamespapaelias, kirstenyeung, ruiyutang, nickolasphanchulizde, chloeteoh, juliakraffczyk, emilyrose, jinaanraushan, audreybudabin, nicolettecarrazza, sophiege, gabrielleyoo, eliotflowers, annabelgottlieb
 
 n = int(input("Run how many games per matchup? "))
 
-class_1 = {
-  "Jesse Yang" : jesseyang.decide, 
-  "Jude Yang" : judeyang.decide,
-  "Malachi Baxter" : malachibaxter.decide, 
-  "Nathan Wertheimer" : nathanwertheimer.decide,
-  "Teddy Abularach" : teddyabularach.decide,
-  "Joshua Randall" : joshuarandall.decide,
-  "Erica Burton" : ericaburton.decide,
-  "Corvus Chanoine" : corvuschanoine.decide,
-  "Madeline Lee" : madelinelee.decide,
-  "Sanvi Sristava" : sanvisristava.decide,
-  "Oliver Kim" : oliverkim.decide,
-  "James Papaelias" : jamespapaelias.decide,
-  "Kirsten Yeung" : kirstenyeung.decide,
-  "Ruiyu Tang" : ruiyutang.decide,
-  "Nickolas Panchulidze" : nickolasphanchulizde.decide,
-  "Chloe Teoh" : chloeteoh.decide,
-  "Julia Kraffczyk" : juliakraffczyk.decide,
-  "Emily Rose" : emilyrose.decide,
-  "Jinaan Raushan" : jinaanraushan.decide,
-  "Audrey Budabin" : audreybudabin.decide,
-  "Nicolette Carrazza" : nicolettecarrazza.decide,
-  "Sophie Ge" : sophiege.decide,
-  "Gabrielle Yoo" : gabrielleyoo.decide,
-  "Eliot Flowers" : eliotflowers.decide,
-  "Annabel Gottlieb" : annabelgottlieb.decide,
-}
+class_1 = {}
 
 all_winners = {key: 0 for key in class_1.keys()}
 for x in itertools.combinations(list(class_1.items()), 4):
