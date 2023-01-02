@@ -159,7 +159,10 @@ def hand_str(hand):
   return s
 
 def perform_decision(do_call, do_raise, do_fold): 
-  if do_call == do_raise and do_raise == do_fold and do_call == 0:
-    return randint(0, 2)
-  x = (do_call, do_raise, do_fold)
-  return x.index(max(x))
+  x = randint(0, do_call + do_raise + do_fold)
+  if x < do_call:
+    return 0
+  elif x < do_raise:
+    return 1
+  else:
+    return 2

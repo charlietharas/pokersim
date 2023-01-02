@@ -2,10 +2,6 @@
 
 import poker
 from random import shuffle
-import p1
-import p2
-import p3
-import p4
 
 # master lists determining ranking of rankings, combinations
 master_ranks = poker.master_ranks
@@ -15,19 +11,6 @@ master_results = [
   "2 pairs", "2", "highest"
 ]
 master_results = list(reversed(master_results))
-
-# maps player decide functions
-def decide1(cards, money, raises):
-  return p1.decide(cards, money, raises)
-
-def decide2(cards, money, raises):
-  return p2.decide(cards, money, raises)
-
-def decide3(cards, money, raises):
-  return p3.decide(cards, money, raises)
-
-def decide4(cards, money, raises):
-  return p4.decide(cards, money, raises)
 
 # defines attributes and actions of a player
 class Player:
@@ -187,7 +170,7 @@ def make_decisions(players, pool):
   return players, pool
 
 # runs a number of rounds until one player remains, no wins counted for draws, alters a dictionary of winners with total win data
-def game(winners):
+def game(winners, decide1, decide2, decide3, decide4):
   players = [
     Player(list(winners.keys())[0], decide1),
     Player(list(winners.keys())[1], decide2),
