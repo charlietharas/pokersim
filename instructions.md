@@ -40,9 +40,10 @@ There are several utility functions in `poker.py` that are used to run the game.
 
 ### You must adjust the weights given in `p1.py`
 - **Leave the `return` statement as given, as the last line in your method**
-- If your `call_weight` is highest, you will call! You will be forced to pay `raises*5` to remain in the round. You have a shot at winning the game!
-- If your `raise_weight` is highest, you will raise! You will be forced to pay `(raises+1)*5` to remain in the round, and all players after you will be forced to pay a minimum of this amount as well (potentially more if others raise). You have a shot of winning it all!
-- If your `fold_weight` is highest, you will fold! You will pay $0, but you will no longer be able to play for the rest of the game, and are ineligible to win. This option guarantees a loss of money--but is it the lesser of several evils?
+- If your `call_weight` is highest, you are most likely to call! In that case, you will be forced to pay `raises*5` to remain in the round. You have a shot at winning the game!
+- If your `raise_weight` is highest, you are most likely to raise! In that case, you will be forced to pay `(raises+1)*5` to remain in the round, and all players after you will be forced to pay a minimum of this amount as well (potentially more if others raise). You have a shot of winning it all!
+- If your `fold_weight` is highest, you are most likely to fold! In that case, you will pay $0, but you will no longer be able to play for the rest of the game, and are ineligible to win. This option guarantees a loss of money--but is it the lesser of several evils?
+- The computer randomly selects between your weights, so their relative sizes determine the chance that each option is selected.
 - The game will actually let you bet more than you have, but if you don't have more than $0 by the end of the round, you are removed from the game
 
 ### Poker combinations for reference:
